@@ -3,8 +3,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class TambahPengguna extends StatefulWidget {
+  const TambahPengguna({super.key});
+
   @override
-  _TambahPenggunaState createState() => _TambahPenggunaState();
+  State<TambahPengguna> createState() => _TambahPenggunaState();
 }
 
 class _TambahPenggunaState extends State<TambahPengguna> {
@@ -21,15 +23,16 @@ class _TambahPenggunaState extends State<TambahPengguna> {
       },
     );
 
+    if (!mounted) return;
     if (response.statusCode == 201) {
       var data = jsonDecode(response.body);
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Data Submitted Successfully'),
+            title: const Text('Data berhasil ditambahkan'),
             content:
-                Text('ID: ${data['id']}\nCreated At: ${data['createdAt']}'),
+                Text('ID: ${data['id']}\nDibuat pada: ${data['createdAt']}'),
           );
         },
       );
@@ -37,9 +40,9 @@ class _TambahPenggunaState extends State<TambahPengguna> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             title: Text('Error'),
-            content: Text('Failed to submit data'),
+            content: Text('Gagal menambahkan data'),
           );
         },
       );
@@ -50,7 +53,7 @@ class _TambahPenggunaState extends State<TambahPengguna> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambah Pengguna'),
+        title: const Text('Tambah Pengguna'),
       ),
       body: Form(
         key: _formKey,
@@ -60,12 +63,12 @@ class _TambahPenggunaState extends State<TambahPengguna> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
+                    return 'Mohon maaf, harap masukkan nama';
                   }
                   return null;
                 },
@@ -74,12 +77,12 @@ class _TambahPenggunaState extends State<TambahPengguna> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Job',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a job';
+                    return 'Mohon maaf, harap masukkan pekerjaan';
                   }
                   return null;
                 },
@@ -96,7 +99,7 @@ class _TambahPenggunaState extends State<TambahPengguna> {
                       submitData();
                     }
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
               ),
             ],

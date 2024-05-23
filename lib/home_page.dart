@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           : Column(
               children: [
                 const Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     "GET SEMUA PENGGUNA",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TambahPengguna()),
+            MaterialPageRoute(builder: (context) => const TambahPengguna()),
           );
         },
         tooltip: 'Tambah Pengguna',
