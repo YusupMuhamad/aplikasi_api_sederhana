@@ -10,6 +10,7 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('${user['first_name']} ${user['last_name']}'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: Column(
