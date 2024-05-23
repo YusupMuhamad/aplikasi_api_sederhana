@@ -1,3 +1,4 @@
+import 'package:aplikasi_api_sederhana/detail_page.dart';
 import 'package:aplikasi_api_sederhana/tambah.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,12 +15,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Map<String, String>> users = [];
+  Map<String, String>? specificUser;
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _loadData();
+    _loadSpecificUser();
   }
 
   Future<void> _loadData() async {
@@ -33,10 +36,27 @@ class _HomePageState extends State<HomePage> {
                 'id': user['id'].toString(),
                 'first_name': user['first_name'],
                 'last_name': user['last_name'],
-                'avatar': user['avatar']
+                'avatar': user['avatar'],
+                'email': user['email']
               })
           .toList();
       isLoading = false;
+    });
+  }
+
+  Future<void> _loadSpecificUser() async {
+    var url = Uri.parse("https://reqres.in/api/users/10");
+    var response = await http.get(url);
+    var data = jsonDecode(response.body)['data'];
+
+    setState(() {
+      specificUser = {
+        'id': data['id'].toString(),
+        'first_name': data['first_name'],
+        'last_name': data['last_name'],
+        'avatar': data['avatar'],
+        'email': data['email']
+      };
     });
   }
 
@@ -49,7 +69,48 @@ class _HomePageState extends State<HomePage> {
       ),
       body: isLoading
           ? const CircularProgressIndicator()
-          : UserListView(users: users),
+          : Column(
+              children: [
+                const Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "GET SEMUA PENGGUNA",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Expanded(child: UserListView(users: users)),
+                if (specificUser != null)
+                  Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "GET SESUAI ID",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(specificUser!['avatar']!),
+                        ),
+                        title: Text(
+                            '${specificUser!['first_name']} ${specificUser!['last_name']}'),
+                        subtitle: Text('ID: ${specificUser!['id']}'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailPage(user: specificUser!)),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+              ],
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -81,6 +142,13 @@ class UserListView extends StatelessWidget {
           title: Text(
               '${users[index]['first_name']} ${users[index]['last_name']}'),
           subtitle: Text('ID: ${users[index]['id']}'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailPage(user: users[index])),
+            );
+          },
         );
       },
     );
