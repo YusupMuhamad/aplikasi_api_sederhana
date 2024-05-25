@@ -7,8 +7,8 @@ Kelompok 5:
 - M Akmal Al Muyasar (2106039)
 
 <div style="display: flex; justify-content: center;">
-    <img width="200px" src="./mockup/1.png" alt="Tampilan Home" />
-    <img width="200px" src="./mockup/2.png" alt="Tampilan Detail Pengguna" />
-    <img width="200px" src="./mockup/3.png" alt="Tampilan Form" />
+    <img style="margin-right: 10px;" width="200px" src="./mockup/1.png" alt="Tampilan Home" />
+    <img style="margin-right: 10px;" width="200px" src="./mockup/2.png" alt="Tampilan Detail Pengguna" />
+    <img style="margin-right: 10px;" width="200px" src="./mockup/3.png" alt="Tampilan Form" />
     <img width="200px" src="./mockup/4.png" alt="Tampilan Berhasil Kirim Data Form" />
 </div>
